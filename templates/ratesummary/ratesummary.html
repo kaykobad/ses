@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+    <head>
+      <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <title>Rate Summary | SES</title>
+    </head>
+    <body>
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <div class="container">
+            <a class="navbar-brand" href="/">Summary Evaluation System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link active" href="/ratesummary/">Rate Summary </a>
+                <a class="nav-item nav-link" href="/writesummary/">Write Summary</a>
+                </div>
+            </div>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="row">
+            {% if info == 'none' %}
+                <div class="col-12 text-center">
+                    <h3 class="text-info">No Article to Rate.</h3>
+                    <p class="text-center"><a href="/writesummary/">Please Write a Summary</a></p>
+                </div>
+            {% elif info == 'fresh' %}
+                <div class="col-12 text-center">
+                    <h3 class="text-info"><u>Main Article</u></h3>
+                </div>
+
+                <div class="col-12 p-3">
+                    {{ article.main_body | safe }}
+                </div>
+
+                <div class="col-12 text-center">
+                  <h3 class="text-info"><u>Summary 1</u></h3>
+                </div>
+
+                <div class="col-12 p-3">
+                    {{ article.com_64125 }}
+                </div>
+
+                <div class="col-12 text-center">
+                  <h3 class="text-info"><u>Summary 2</u></h3>
+                </div>
+
+                <div class="col-12 p-3">
+                    {{ article.wr }}
+                </div>
+
+                <div class="col-12 text-center">
+                  <h3 class="text-info"><u>Summary 3</u></h3>
+                </div>
+
+                <div class="col-12 p-3">
+                    {{ article.tr }}
+                </div>
+
+                <div class="col-12 text-center">
+                    <h3 class="text-info"><u>Write your scores (0-10) here</u></h3>
+                </div>
+
+                <div class="col-12 p-3">
+                    <form action="/ratesummary/" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="aid" class="form-control mb-3" value="{{article.id}}" hidden>
+                        <input type="number" name="com_score" class="form-control mb-3" placeholder="Summary 1 score" min="0" max="10" step="0.1" required>
+                        <input type="number" name="wr_score" class="form-control mb-3" placeholder="Summary 2 score" min="0" max="10" step="0.1" required>
+                        <input type="number" name="tr_score" class="form-control mb-3" placeholder="Summary 3 score" min="0" max="10" step="0.1" required>
+                        
+                        <p class="text-right"><input class="btn btn-info" type="submit" value="Submit" /></p>
+                    </form>
+                </div>
+
+            {% else %}
+                <div class="col-12 text-center">
+                    <h3 class="text-info">Thank you for your support</h3>
+                    <p class="text-center"><a href="/ratesummary/">Would you like to rate another summary?</a></p>
+                </div>
+            {% endif %}
+            </div>
+
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container-fluid bg-info text-white">
+            <p class="p-3 text-center">This site is for educational purpose</p>
+        </div>
+    </footer>
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
